@@ -6,6 +6,9 @@
   "description": "yes",
   "homepage": "./",
   "main": "./public/electron.js",
+  "repository": {
+    "url": "https://github.com/SEYA-Software-LLC/InventoryManager"
+  },
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
