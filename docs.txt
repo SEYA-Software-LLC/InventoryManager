@@ -1,0 +1,8 @@
+Documentation on how to set up the project && How to distribute the application
+    - https://mmazzarolo.com/blog/2021-08-12-building-an-electron-application-using-create-react-app/
+
+Package for distro
+    - yarn electron:package:win/mac/linux
+
+Run Application
+    - yarn electron:start
