@@ -1,6 +1,6 @@
 {
-  "name": "seyaware",
-  "version": "0.1.0",
+  "name": "inventory_manager",
+  "version": "0.1.2",
   "private": true,
   "author": "SEYA Software, LLC",
   "description": "yes",
@@ -60,8 +60,8 @@
     "wait-on": "^6.0.1"
   },
   "build": {
-    "appId": "com.seyasoftware.seyaware",
-    "productName": "SEYAware",
+    "appId": "com.seyasoftware.inventory",
+    "productName": "Inventory Manager",
     "files": [
       "build/**/*",
       "node_modules/**/*"

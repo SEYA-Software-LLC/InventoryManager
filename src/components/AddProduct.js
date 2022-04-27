@@ -1,10 +1,10 @@
 import { Button, Grid, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useState } from 'react'
-import {itemTypes, rarityTypes, ladderTypes} from "../constants";
+import {itemTypes, rarityTypes, ladderTypes, base_url} from "../constants";
 import axios from 'axios';
 
-function AddProduct() {
+function AddProduct(props) {
     const [itemType, setItemType] = useState(0);
     const [rarityType, setRarityType] = useState(0);
     const [ladderType, setLadderType] = useState(0);
@@ -12,6 +12,7 @@ function AddProduct() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [sockets, setSockets] = useState(0);
+    const [imgUrl, setImgUrl] = useState("");
     const [error, setError] = useState("");
 
     const handleItemTypeChange = (e) => {
@@ -37,22 +38,26 @@ function AddProduct() {
     }
 
     const addProduct = async () => {
-        if (title === "" || description === "") {
+        if (title === "" || description === "" || parseInt(sockets) > 6) {
             setError("Please fill out title and description");
             return;
         }
 
         let body = {
+            companyId: props.companyId,
             title: title,
             description: description,
             rarity: rarityType,
             gameType: gameType,
             itemType: itemType,
             ladderType: ladderType,
-            sockets: parseInt(sockets)
+            sockets: parseInt(sockets),
+            price: 0,
+            isActive: true,
+            imgUrl: imgUrl
         }
 
-        await axios.post("http://localhost:3001/items", body, {}).then((resp) => {
+        await axios.post(`${base_url}/items`, body, {}).then((resp) => {
             resetForm();
         })
     }
@@ -60,18 +65,12 @@ function AddProduct() {
     return (
         <Box>
             <Grid container spacing={2} sx={{padding: "25px"}}>
-                
-                <Grid item xs={12}>
-                    <Paper>
-                        <Typography>Add Product</Typography>
-                    </Paper>
-                </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     <TextField label="Item Title" variant="outlined" required onChange={(e) => setTitle(e.target.value)} value={title}/>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     <TextField label="Description" variant="outlined" required multiline rows={2} onChange={(e) => setDescription(e.target.value)} value={description}/>
                 </Grid>
 
@@ -107,6 +106,10 @@ function AddProduct() {
 
                 <Grid item xs={12}>
                     <TextField label="# of Sockets" variant="outlined" required type="number" onChange={(e) => setSockets(e.target.value)} value={sockets}/>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <TextField label="Image URL" variant="outlined" required onChange={(e) => setImgUrl(e.target.value)} value={imgUrl}/>
                 </Grid>
 
                 <Grid item xs={12}>

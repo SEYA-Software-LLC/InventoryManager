@@ -1,18 +1,20 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {HashRouter, Routes, Route} from "react-router-dom";
 
 // Screens
 import DashboardScreen from './Screens/DashboardScreen';
+import LoginScreen from './Screens/LoginScreen';
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
-          <Route path="/" element={<DashboardScreen/>} />
+          <Route path="/" element={<LoginScreen />} />
+          <Route path="/dash" element={<DashboardScreen/>} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }

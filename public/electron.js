@@ -2,7 +2,6 @@
 const { app, BrowserWindow, protocol } = require("electron");
 const path = require("path");
 const url = require("url");
-require('update-electron-app')()
 
 // Create the native browser window.
 function createWindow() {

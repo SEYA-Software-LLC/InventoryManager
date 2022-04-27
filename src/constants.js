@@ -39,3 +39,5 @@ export const ladderTypes = [
     'D2R_LADDER_SOFTCORE_2022_SEASON_2',
     'D2R_LADDER_SOFTCORE_2022_SEASON_3',
 ]
+
+export const base_url = "https://inventory.auction101.us"
