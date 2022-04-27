@@ -76,11 +76,12 @@ function Inventory(props) {
         <Box>
             <Box sx={{height: "42px", textAlign: "left", marginLeft: "10px", marginTop: "7px"}}>
                 <Button variant="contained" sx={{backgroundColor: "red"}} onClick={handleOpen} >Add Product</Button>
+                <Button variant="contained" sx={{backgroundColor: "blue", marginLeft:"10px"}} disabled>Create Order</Button>
             </Box>
             <Box sx={{height: "621px"}}>
-            {products === null ? "" : <DataGrid rows={products} columns={inventoryHeaders} pageSize={25} rowsPerPageOptions={[5, 10, 25, 50]} getRowId={(row) => row._id} onSelectionModelChange={(newSelection) => {
+            {products === null ? "" : <DataGrid rows={products} columns={inventoryHeaders} pageSize={25} checkboxSelection rowsPerPageOptions={[5, 10, 25, 50]} getRowId={(row) => row._id} onSelectionModelChange={(newSelection) => {
                 setSelection(newSelection);
-            }} onCellClick={(item) => {
+            }} onCellDoubleClick={(item) => {
                 setSelectedItem(item.row);
                 handleItemOpen();
             }}/>}

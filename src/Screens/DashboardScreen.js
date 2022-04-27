@@ -10,13 +10,19 @@ function DashboardScreen() {
     const [refresh, setRefresh] = useState(false);
     let location = useLocation();
 
-    const screens = ["Inventory"];
+    const screens = ["Inventory", "Analytics"];
     const [screen, setScreen] = useState(screens[0]);
 
     const renderInventory = () => {
         setScreen(screens[0]);
 
         setRefresh(prev => !prev)
+    }
+
+    const renderAnalytics = () => {
+        setScreen(screens[1]);
+
+        setRefresh(prev => !prev);
     }
 
     return (
@@ -30,8 +36,8 @@ function DashboardScreen() {
                     </ListItemButton> 
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton style={{textAlign: "center"}}>
-                        <ListItemText primary="Reserved" />
+                    <ListItemButton style={{textAlign: "center"}} onClick={renderAnalytics}>
+                        <ListItemText primary="Analytics" />
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
@@ -43,7 +49,7 @@ function DashboardScreen() {
 
             <Box sx={{width: "90%", height: "669px"}}>
                 {console.log(screen)}
-                {screen === screens[0] ? <Inventory refresh={refresh} companyId={location.state.companyId}/> : ""}
+                {screen === screens[0] ? <Inventory refresh={refresh} companyId={location.state.companyId}/> : screen === screens[1] ? <Analytics companyId={location.state.companyId} refresh={refresh} /> : ""}
             </Box>
         </Box>
     )
