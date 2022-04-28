@@ -2,6 +2,7 @@
 const { app, BrowserWindow, protocol } = require("electron");
 const path = require("path");
 const url = require("url");
+const {autoUpdater} = require('electron-updater');
 
 // Create the native browser window.
 function createWindow() {
@@ -15,6 +16,8 @@ function createWindow() {
       preload: path.join(__dirname, "preload.js"),
     },
   });
+
+  autoUpdater.checkForUpdatesAndNotify()
 
   // In production, set the initial browser path to the local bundle generated
   // by the Create React App build process.

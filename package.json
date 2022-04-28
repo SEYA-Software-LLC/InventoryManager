@@ -1,14 +1,12 @@
 {
   "name": "inventory_manager",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "author": "SEYA Software, LLC",
   "description": "yes",
   "homepage": "./",
   "main": "./public/electron.js",
-  "repository": {
-    "url": "https://github.com/SEYA-Software-LLC/InventoryManager"
-  },
+  "repository": "https://github.com/SEYA-Software-LLC/InventoryManager",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",

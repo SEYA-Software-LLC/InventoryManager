@@ -50,7 +50,7 @@ function AddProduct(props) {
 
     const getCompanyBotNames = async () => {
         await axios.get(`${base_url}/companies/${props.companyId}`).then((resp) => {
-            let company = resp.data.result;
+            let company = resp.data;
             let botNames = company.botNames;
             console.log(botNames);
             setBotNames(botNames);
@@ -73,7 +73,6 @@ function AddProduct(props) {
             ladderType: ladderType,
             sockets: parseInt(sockets),
             price: 0,
-            isActive: true,
             imgUrl: imgUrl,
             location: botName
         }

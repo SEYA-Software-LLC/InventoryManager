@@ -4,6 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 import { itemTypes, rarityTypes, ladderTypes, base_url } from '../constants';
 import AddProduct from './AddProduct';
+import CreateOrder from './CreateOrder';
 
 
 const inventoryHeaders = [
@@ -19,7 +20,7 @@ const style = {position: 'absolute',
 top: '50%',
 left: '50%',
 transform: 'translate(-50%, -50%)',
-width: 800,
+width: 1000,
 height: 600,
 bgcolor: 'background.paper',
 border: '2px solid #000',
@@ -34,6 +35,9 @@ function Inventory(props) {
     const [itemOpen, setItemOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
 
+    // Orders
+    const [orderOpen, setOrderOpen] = useState(false);
+
     // Keep track of selected item id's for reserving
     const [selection, setSelection] = useState([]);
 
@@ -44,8 +48,8 @@ function Inventory(props) {
     }, [props.refresh])
 
     const getInventory = async () => {
-        await axios.get(`${base_url}/items/${props.companyId}`).then((resp) => {
-            let items = resp.data.result;
+        await axios.get(`${base_url}/items/${props.companyId}?isActive=true`).then((resp) => {
+            let items = resp.data;
             items.forEach((item) => {
                 item.itemType = itemTypes[item.itemType];
                 item.rarity = rarityTypes[item.rarity];
@@ -72,20 +76,30 @@ function Inventory(props) {
         setItemOpen(false);
     }
 
+    const handleOrderOpen = () => {
+        setOrderOpen(true);
+    }
+
+    const handleOrderClose = () => {
+        setOrderOpen(false);
+    }
+
     return (
         <Box>
             <Box sx={{height: "42px", textAlign: "left", marginLeft: "10px", marginTop: "7px"}}>
                 <Button variant="contained" sx={{backgroundColor: "red"}} onClick={handleOpen} >Add Product</Button>
-                <Button variant="contained" sx={{backgroundColor: "blue", marginLeft:"10px"}} disabled>Create Order</Button>
+                <Button variant="contained" sx={{backgroundColor: "blue", marginLeft:"10px"}} onClick={handleOrderOpen}>Create Order</Button>
             </Box>
             <Box sx={{height: "621px"}}>
-            {products === null ? "" : <DataGrid rows={products} columns={inventoryHeaders} pageSize={25} checkboxSelection rowsPerPageOptions={[5, 10, 25, 50]} getRowId={(row) => row._id} onSelectionModelChange={(newSelection) => {
+            {products === null ? "" : <DataGrid rows={products} columns={inventoryHeaders} pageSize={25} checkboxSelection rowsPerPageOptions={[5, 10, 25, 50]} getRowId={(row) => row.id} onSelectionModelChange={(newSelection) => {
                 setSelection(newSelection);
             }} onCellDoubleClick={(item) => {
                 setSelectedItem(item.row);
                 handleItemOpen();
             }}/>}
             </Box>
+
+            {/* Add Product Modal */}
             <Modal
             open={open}
             onClose={handleClose}
@@ -96,6 +110,20 @@ function Inventory(props) {
                     <AddProduct companyId={props.companyId} />
                 </Box>
             </Modal>
+
+            {/* Create Order Modal */}
+            <Modal
+            open={orderOpen}
+            onClose={handleOrderClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <CreateOrder companyId={props.companyId} selection={selection}/>
+                </Box>
+            </Modal>
+
+            {/* View Item Modal */}
             <Modal
             open={itemOpen}
             onClose={handleItemClose}

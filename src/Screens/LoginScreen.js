@@ -12,16 +12,16 @@ function LoginScreen() {
 
   const handleLogin = async () => {
     let body = {
-      _id: username,
+      username: username,
       password: password
     }
 
     if (username === "" || password === "") return;
 
     await axios.post(`${base_url}/users/login`, body, {}).then((resp) => {
-      if (resp.data.result.companyId.error === "User does not exist") return;
+      if (resp.status === 404) return;
 
-      let companyId = resp.data.result.companyId;
+      let companyId = resp.data;
       console.log(companyId);
       navigate('/dash', {state: {companyId: companyId}})
     })
