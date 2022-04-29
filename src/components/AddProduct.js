@@ -49,11 +49,14 @@ function AddProduct(props) {
     }, [])
 
     const getCompanyBotNames = async () => {
-        await axios.get(`${base_url}/companies/${props.companyId}`).then((resp) => {
-            let company = resp.data;
-            let botNames = company.botNames;
-            console.log(botNames);
-            setBotNames(botNames);
+        await axios.get(`${base_url}/bots/company/${props.companyId}`).then((resp) => {
+            let companyBots = resp.data;
+
+            let botEmails = []
+            companyBots.forEach((bot) => {
+                botEmails.push(bot.email);
+            })
+            setBotNames(botEmails);
         })
     }
 

@@ -6,13 +6,14 @@ import { useLocation } from 'react-router-dom';
 import Inventory from '../components/Inventory'
 import Analytics from '../components/Analytics';
 import Orders from '../components/Orders';
+import Bots from '../components/Bots';
 
 function DashboardScreen() {
     const [refresh, setRefresh] = useState(false);
     let location = useLocation();
 
-    const screens = ["Inventory", "Analytics", "Orders"];
-    const [screen, setScreen] = useState(screens[2]);
+    const screens = ["Inventory", "Analytics", "Orders", "Bots"];
+    const [screen, setScreen] = useState(screens[0]);
 
     const renderInventory = () => {
         setScreen(screens[0]);
@@ -28,6 +29,12 @@ function DashboardScreen() {
 
     const renderOrders = () => {
         setScreen(screens[2]);
+
+        setRefresh(prev => !prev);
+    }
+
+    const renderBots = () => {
+        setScreen(screens[3]);
 
         setRefresh(prev => !prev);
     }
@@ -48,6 +55,11 @@ function DashboardScreen() {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
+                    <ListItemButton style={{textAlign: "center"}} onClick={renderBots}>
+                        <ListItemText primary="Bots" />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
                     <ListItemButton style={{textAlign: "center"}} onClick={renderAnalytics}>
                         <ListItemText primary="Analytics" />
                     </ListItemButton>
@@ -64,7 +76,8 @@ function DashboardScreen() {
                 {
                 screen === screens[0] ? <Inventory refresh={refresh} companyId={location.state.companyId}/> : 
                 screen === screens[1] ? <Analytics companyId={location.state.companyId} refresh={refresh} /> : 
-                screen === screens[2] ? <Orders companyId={location.state.companyId} refresh={refresh} /> : ""
+                screen === screens[2] ? <Orders companyId={location.state.companyId} refresh={refresh} /> : 
+                screen === screens[3] ? <Bots companyId={location.state.companyId} refresh={refresh} /> : ""
                 }
             </Box>
         </Box>
